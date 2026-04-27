@@ -2211,3 +2211,21 @@ class EOSDriver(NetworkDriver):
             }
 
         return vlans
+
+    def get_vrrp_brief(self):
+        command = ["show vrrp brief"]
+        output = self.device.run_commands(command, encoding="json")[0]["virtualRouters"]
+
+        vrrp_routers = {"interfaces": {}}
+        for virtual_router in output:
+            intf = virtual_router["interface"]
+
+            virtual_router.pop("interface")
+            virtual_router.pop("stateTransitionTime")
+
+            if intf not in vrrp_routers["interfaces"]:
+                vrrp_routers["interfaces"][intf] = []
+
+            vrrp_routers["interfaces"][intf].append(virtual_router)
+
+        return vrrp_routers

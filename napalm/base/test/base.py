@@ -606,3 +606,25 @@ class TestGettersNetworkDriver(object):
             result = result and self._test_model(models.VlanDict, vlan_data)
 
         self.assertTrue(result)
+
+    def test_get_vrrp_brief(self):
+        try:
+            get_vrrp_brief = self.device.get_vrrp_brief()
+        except NotImplementedError:
+            raise SkipTest()
+        result = len(get_vrrp_brief) > 0
+
+        result = result and self._test_model(models.VrrpBriefDict, get_vrrp_brief)
+
+        for intf, vrrp_data in get_vrrp_brief["interfaces"].items():
+            for virtualrouter in vrrp_data:
+                if virtualrouter["version"] == 3:
+                    result = result and self._test_model(
+                        models.VrrpBriefVirtualRouterV3Dict, virtualrouter
+                    )
+                else:
+                    result = result and self._test_model(
+                        models.VrrpBriefVirtualRouterV2Dict, virtualrouter
+                    )
+
+        self.assertTrue(result)
