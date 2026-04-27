@@ -1,0 +1,21 @@
+{
+    "advertiseInterval": 30,
+    "virtualRouters": [
+        {
+            "interface": "Vlan20",
+            "vrfName": "default",
+            "interfaceStatus": "up",
+            "protocolStatus": "up",
+            "ipv6Addresses": [
+                {
+                    "ip": "2001:db8:1::2",
+                    "mask": 64
+                }
+            ],
+            "virtualIpv6": [
+                "2001:db8:1::1"
+            ]
+        }
+    ],
+    "virtualMac": "aa:22:33:44:55:66"
+}

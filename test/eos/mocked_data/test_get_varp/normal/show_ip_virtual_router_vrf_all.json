@@ -1,0 +1,19 @@
+{
+    "advertiseInterval": 30,
+    "virtualRouters": [
+        {
+            "interface": "Vlan20",
+            "vrfName": "default",
+            "interfaceStatus": "up",
+            "protocolStatus": "up",
+            "ipAddress": {
+                "ip": "192.0.2.18",
+                "mask": 28
+            },
+            "virtualIps": [
+                "192.0.2.17"
+            ]
+        }
+    ],
+    "virtualMac": "aa:22:33:44:55:66"
+}
