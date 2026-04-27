@@ -1,0 +1,50 @@
+{
+  "virtualRouters": [
+    {
+      "priority": 110,
+      "state": "master",
+      "version": 2,
+      "vrfName": "default",
+      "interface": "Vlan20",
+      "masterDownInterval": 3570,
+      "groupId": 1,
+      "stateTransitionTime": 1769683194.071159,
+      "virtualIp": "a.a.a.a"
+    },
+    {
+      "priority": 90,
+      "state": "backup",
+      "version": 2,
+      "vrfName": "default",
+      "interface": "Vlan22",
+      "masterDownInterval": 3640,
+      "groupId": 1,
+      "stateTransitionTime": 1769611233.148741,
+      "virtualIp": "b.b.b.b"
+    },
+    {
+      "priority": 110,
+      "state": "backup",
+      "version": 2,
+      "vrfName": "default",
+      "interface": "Vlan23",
+      "masterDownInterval": 3570,
+      "groupId": 1,
+      "stateTransitionTime": 1773998414.384922,
+      "virtualIp": "c.c.c.c"
+    },
+    {
+      "priority": 110,
+      "virtualIps": [
+          "2001:a:b:c::d"
+      ],
+      "state": "backup",
+      "version": 3,
+      "vrfName": "default",
+      "interface": "Vlan23",
+      "masterDownInterval": 3570,
+      "groupId": 1,
+      "stateTransitionTime": 1773998414.384485
+    }
+  ]
+}

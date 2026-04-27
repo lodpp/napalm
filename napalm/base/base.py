@@ -1767,3 +1767,56 @@ class NetworkDriver(object):
             return canonical_interface_name(interface, addl_name_map=None)
         else:
             return interface
+
+    def get_vrrp_brief(self):
+        """
+        Get the - brief - status of VRRP virtual routers on a box
+
+        Return a dictionnary of list of dictionnaries where the first key is an unique
+        name and the inner dictionnary contains the following keys:
+
+        * groupId (int)
+        * masterDownInterval (int)
+        * priority (int)
+        * state (text_type)
+        * version (int)
+
+        * virtualIp (text_type) vrrp v2 support only a single vip per group
+        or
+        * virtualIps (list or text_type) vrrp v3 supports multiple vips per group
+
+        * vrfName (text_type)
+
+
+        For example::
+
+        {'Vlan22': [{'groupId': 1,
+                     'masterDownInterval': 3640,
+                     'priority': 90,
+                     'state': 'backup',
+                     'version': 2,
+                     'virtualIp': 'a.a.a.aaa',
+                     'vrfName': 'default'}],
+         'Vlan80': [{'groupId': 1,
+                     'masterDownInterval': 3570,
+                     'priority': 110,
+                     'state': 'backup',
+                     'version': 2,
+                     'virtualIp': 'b.b.b.bbb',
+                     'vrfName': 'default'},
+                    {'groupId': 1,
+                     'masterDownInterval': 3570,
+                     'priority': 110,
+                     'state': 'backup',
+                     'version': 3,
+                     'virtualIps': ['xxxx:xxxx:xxxx:x::xxxx'],
+                     'vrfName': 'default'}],
+         'Vlan903': [{'groupId': 1,
+                      'masterDownInterval': 3640,
+                      'priority': 90,
+                      'state': 'backup',
+                      'version': 2,
+                      'virtualIp': 'c.c.c.ccc',
+                      'vrfName': 'default'}]}
+        """
+        raise NotImplementedError
