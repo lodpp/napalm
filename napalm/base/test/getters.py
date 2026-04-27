@@ -609,3 +609,17 @@ class BaseTestGetters(object):
                     assert helpers.test_model(models.VrrpBriefVirtualRouterV2Dict, virtualrouter)
 
         return get_vrrp_brief
+
+    @wrap_test_cases
+    def test_get_varp(self, test_case):
+        """Test get_varp."""
+        get_varp = self.device.get_varp()
+
+        assert len(get_varp) > 0
+
+        assert helpers.test_model(models.VarpDict, get_varp)
+
+        for intf, varp_data in get_varp["interfaces"].items():
+            assert helpers.test_model(models.VarpVirtualRouterDict, varp_data)
+
+        return get_varp

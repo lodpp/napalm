@@ -1820,3 +1820,39 @@ class NetworkDriver(object):
                       'vrfName': 'default'}]}
         """
         raise NotImplementedError
+
+    def get_varp(self):
+        """
+        Get the status of VARP virtual routers, equivalent
+        to the `show ip|ipv6 virtual-routers vrf all` on Arista EOS.
+
+        Return a dictionnary containing 2 keys, the VARP virtual mac and the
+        virtual routers configured.
+
+        * virtualMac (text_type)
+        * interfaces (dict of dict)
+
+        interfaces is a dictionnary of dictionnaries where the first key is an
+        unique interface name and the inner dictionnary contains the following
+        keys:
+
+        * virtualIps (list of text_type)
+        * vrfName (text_type)
+
+        For example::
+
+        {'virtualMac': 'aa:aa:aa:aa:aa:aa',
+         'interfaces': {'Vlan10': {'virtualIps': ['a.a.a.aaa'],
+                                   'vrfName': 'default'},
+                        'Vlan11': {'virtualIps': ['b.b.b.bbb'],
+                                   'vrfName': 'default'},
+                        'Vlan12': {'virtualIps': ['c.c.c.ccc'],
+                                   'vrfName': 'default'},
+                        'Vlan13': {'virtualIps': ['d.d.d.ddd'],
+                                   'vrfName': 'default'},
+                        'Vlan14': {'virtualIps': ['e.e.e.eee'],
+                                   'vrfName': 'default'},
+                        'Vlan16': {'virtualIps': ['f.f.f.fff'],
+                                   'vrfName': 'default'}}
+        """
+        raise NotImplementedError

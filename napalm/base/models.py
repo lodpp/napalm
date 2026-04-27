@@ -467,3 +467,7 @@ VrrpBriefVirtualRouterV3Dict = TypedDict(
 )
 
 VrrpBriefDict = TypedDict("VrrpBriefDict", {"interfaces": Dict})
+
+VarpVirtualRouterDict = TypedDict("VarpVirtualRouterDict", {"vrfName": str, "virtualIps": List})
+
+VarpDict = TypedDict("VarpDict", {"virtualMac": str, "interfaces": Dict})

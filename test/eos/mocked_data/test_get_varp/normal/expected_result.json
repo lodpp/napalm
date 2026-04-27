@@ -1,0 +1,12 @@
+{
+    "virtualMac": "aa:22:33:44:55:66",
+    "interfaces": {
+        "Vlan20": {
+            "vrfName": "default",
+            "virtualIps": [
+                "192.0.2.17",
+                "2001:db8:1::1"
+            ]
+        }
+    }
+}
