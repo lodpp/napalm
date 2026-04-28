@@ -591,3 +591,35 @@ class BaseTestGetters(object):
             assert helpers.test_model(models.VlanDict, vlan_data)
 
         return get_vlans
+
+    @wrap_test_cases
+    def test_get_vrrp_brief(self, test_case):
+        """Test get_vrrp_brief."""
+        get_vrrp_brief = self.device.get_vrrp_brief()
+
+        assert len(get_vrrp_brief) > 0
+
+        assert helpers.test_model(models.VrrpBriefDict, get_vrrp_brief)
+
+        for intf, vrrp_data in get_vrrp_brief["interfaces"].items():
+            for virtualrouter in vrrp_data:
+                if virtualrouter["version"] == 3:
+                    assert helpers.test_model(models.VrrpBriefVirtualRouterV3Dict, virtualrouter)
+                else:
+                    assert helpers.test_model(models.VrrpBriefVirtualRouterV2Dict, virtualrouter)
+
+        return get_vrrp_brief
+
+    @wrap_test_cases
+    def test_get_varp(self, test_case):
+        """Test get_varp."""
+        get_varp = self.device.get_varp()
+
+        assert len(get_varp) > 0
+
+        assert helpers.test_model(models.VarpDict, get_varp)
+
+        for intf, varp_data in get_varp["interfaces"].items():
+            assert helpers.test_model(models.VarpVirtualRouterDict, varp_data)
+
+        return get_varp

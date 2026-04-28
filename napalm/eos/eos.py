@@ -2204,3 +2204,53 @@ class EOSDriver(NetworkDriver):
             }
 
         return vlans
+
+    def get_vrrp_brief(self):
+        command = ["show vrrp brief"]
+        output = self.device.run_commands(command, encoding="json")[0]["virtualRouters"]
+
+        vrrp_routers = {"interfaces": {}}
+        for virtual_router in output:
+            intf = virtual_router["interface"]
+
+            virtual_router.pop("interface")
+            virtual_router.pop("stateTransitionTime")
+
+            if intf not in vrrp_routers["interfaces"]:
+                vrrp_routers["interfaces"][intf] = []
+
+            vrrp_routers["interfaces"][intf].append(virtual_router)
+
+        return vrrp_routers
+
+    def get_varp(self):
+        commands = ["show ip virtual-router vrf all", "show ipv6 virtual-router vrf all"]
+        output = self.device.run_commands(commands, encoding="json")
+
+        varp_routers = {"virtualMac": "", "interfaces": {}}
+
+        """
+        Same virtual mac for ipv4/6, getting info from ipv4 output only.
+        """
+        varp_routers["virtualMac"] = output[0]["virtualMac"]
+
+        """
+        Listing ipv4/ipv6 varp virtual routers per interface
+        """
+        for afi in output:
+            for virtual_router in afi["virtualRouters"]:
+                intf = virtual_router["interface"]
+
+                if intf not in varp_routers["interfaces"]:
+                    varp_routers["interfaces"][intf] = {
+                        "vrfName": virtual_router["vrfName"],
+                        "virtualIps": [],
+                    }
+                if virtual_router.get("virtualIpv6"):
+                    vipsKey = "virtualIpv6"
+                else:
+                    vipsKey = "virtualIps"
+
+                varp_routers["interfaces"][intf]["virtualIps"].extend(virtual_router[vipsKey])
+
+        return varp_routers

@@ -439,3 +439,35 @@ ListValidationResult = TypedDict(
 )
 
 ReportResult = TypedDict("ReportResult", {"complies": bool, "skipped": List})
+
+VrrpBriefVirtualRouterV2Dict = TypedDict(
+    "VrrpBriefVirtualRouterV2Dict",
+    {
+        "groupId": int,
+        "masterDownInterval": int,
+        "priority": int,
+        "state": str,
+        "version": int,
+        "virtualIp": str,  # vrrp v2 allows a single VIP only
+        "vrfName": str,
+    },
+)
+
+VrrpBriefVirtualRouterV3Dict = TypedDict(
+    "VrrpBriefVirtualRouterV3Dict",
+    {
+        "groupId": int,
+        "masterDownInterval": int,
+        "priority": int,
+        "state": str,
+        "version": int,
+        "virtualIps": List,  # vrrp v3 allows multiple VIPS
+        "vrfName": str,
+    },
+)
+
+VrrpBriefDict = TypedDict("VrrpBriefDict", {"interfaces": Dict})
+
+VarpVirtualRouterDict = TypedDict("VarpVirtualRouterDict", {"vrfName": str, "virtualIps": List})
+
+VarpDict = TypedDict("VarpDict", {"virtualMac": str, "interfaces": Dict})

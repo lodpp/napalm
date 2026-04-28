@@ -1767,3 +1767,92 @@ class NetworkDriver(object):
             return canonical_interface_name(interface, addl_name_map=None)
         else:
             return interface
+
+    def get_vrrp_brief(self):
+        """
+        Get the - brief - status of VRRP virtual routers on a box
+
+        Return a dictionnary of list of dictionnaries where the first key is an unique
+        name and the inner dictionnary contains the following keys:
+
+        * groupId (int)
+        * masterDownInterval (int)
+        * priority (int)
+        * state (text_type)
+        * version (int)
+
+        * virtualIp (text_type) vrrp v2 support only a single vip per group
+        or
+        * virtualIps (list or text_type) vrrp v3 supports multiple vips per group
+
+        * vrfName (text_type)
+
+
+        For example::
+
+        {'Vlan22': [{'groupId': 1,
+                     'masterDownInterval': 3640,
+                     'priority': 90,
+                     'state': 'backup',
+                     'version': 2,
+                     'virtualIp': 'a.a.a.aaa',
+                     'vrfName': 'default'}],
+         'Vlan80': [{'groupId': 1,
+                     'masterDownInterval': 3570,
+                     'priority': 110,
+                     'state': 'backup',
+                     'version': 2,
+                     'virtualIp': 'b.b.b.bbb',
+                     'vrfName': 'default'},
+                    {'groupId': 1,
+                     'masterDownInterval': 3570,
+                     'priority': 110,
+                     'state': 'backup',
+                     'version': 3,
+                     'virtualIps': ['xxxx:xxxx:xxxx:x::xxxx'],
+                     'vrfName': 'default'}],
+         'Vlan903': [{'groupId': 1,
+                      'masterDownInterval': 3640,
+                      'priority': 90,
+                      'state': 'backup',
+                      'version': 2,
+                      'virtualIp': 'c.c.c.ccc',
+                      'vrfName': 'default'}]}
+        """
+        raise NotImplementedError
+
+    def get_varp(self):
+        """
+        Get the status of VARP virtual routers, equivalent
+        to the `show ip|ipv6 virtual-routers vrf all` on Arista EOS.
+
+        Return a dictionnary containing 2 keys, the VARP virtual mac and the
+        virtual routers configured.
+
+        * virtualMac (text_type)
+        * interfaces (dict of dict)
+
+        interfaces is a dictionnary of dictionnaries where the first key is an
+        unique interface name and the inner dictionnary contains the following
+        keys:
+
+        * virtualIps (list of text_type)
+        * vrfName (text_type)
+
+        For example::
+
+        {'virtualMac': 'aa:aa:aa:aa:aa:aa',
+         'interfaces': {'Vlan10': {'virtualIps': ['a.a.a.aaa'],
+                                   'vrfName': 'default'},
+                        'Vlan11': {'virtualIps': ['b.b.b.bbb'],
+                                   'vrfName': 'default'},
+                        'Vlan12': {'virtualIps': ['c.c.c.ccc'],
+                                   'vrfName': 'default'},
+                        'Vlan13': {'virtualIps': ['d.d.d.ddd'],
+                                   'vrfName': 'default'},
+                        'Vlan14': {'virtualIps': ['e.e.e.eee'],
+                                   'vrfName': 'default'},
+                        'Vlan16': {'virtualIps': ['f.f.f.fff'],
+                                   'vrfName': 'default'}}
+        """
+        raise NotImplementedError
